@@ -159,3 +159,21 @@ def limit_issues(issues, limit_len=100000):
     """Limit the number of issues saved in our DB."""
     sorted_issues = sorted(issues, key=lambda x: x['updated_at'], reverse=True)
     return sorted_issues[:limit_len]
+
+def get_first_timer_issues(issue_label: str) -> list:
+    """Fetches the first page of issues with the label first-timers-label which are still open."""
+    try:
+        res = requests.get(FIRST_ISSUE_QUERY_URL.format(issue_label))
+        res.raise_for_status()
+        data = res.json()
+        items = [
+            item for item in data.get('items', [])
+            if check_days_passed(item['created_at'], DAYS_OLD)
+        ]
+        return items
+    except requests.exceptions.RequestException as e:
+        log_error(f"Request failed: {e}")
+        return []
+    except (ValueError, KeyError) as e:
+        log_error(f"Error parsing response: {e}")
+        return []
