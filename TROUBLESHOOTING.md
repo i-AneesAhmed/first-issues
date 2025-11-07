@@ -1,6 +1,18 @@
-## TROUBLESHOOTING
+## 🧰 Troubleshooting
 
-This document have list of know issues and tips to fix those
+This document contains a list of **known issues** and **tips to fix them** during setup or usage.
 
-- `JSON object must be str, not 'bytes'`
-  - This issue shows up on using wrong python version. This should be solved on using `python3.6`
+---
+
+### ⚠️ Issue: `JSON object must be str, not 'bytes'`
+
+**Cause:**  
+This error usually occurs when using an **incorrect Python version**.  
+It happens because the `json` module in Python 3.6+ expects a string (`str`) object, not a `bytes` object.
+
+**Fix:**  
+✅ Make sure you are running the project with **Python 3.6 or higher**.  
+You can check your version by running:
+
+```bash
+python --version

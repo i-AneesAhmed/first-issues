@@ -1,4 +1,4 @@
-
+# file test_basics
 # attribution:
 # https://containersolutions.github.io/runbooks/posts/python/module-has-no-attribute/#step-2
 from first_timers import first_timers
@@ -33,3 +33,11 @@ def test_humanize_url():
     api_url = "https://api.github.com/repos/tidusjar/NZBDash/issues/53"
     human_url = 'https://github.com/tidusjar/NZBDash/issues/53'
     assert first_timers.humanize_url(api_url) == human_url
+
+def test_get_fresh_empty_list():
+    """Test behavior when no new issues exist."""
+    old_issues = example_issues
+    new_issues = example_issues
+    result = first_timers.get_fresh(old_issues, new_issues)
+    assert result == [], "Expected no new issues when lists are identical"
+
